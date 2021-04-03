@@ -8,21 +8,41 @@
     <div class="card-body">
       <form [formGroup]="formProduto">
         <div class="row">
-          <div class="form-group col-md-4">
+          <!-- <div class="form-group col-md-4">
             <label>Imagem</label>
             <input type="file" class="form-control" formControlName="imagem">
+          </div> -->
+
+          <div class="form-group col-md-4">
+            <label>Descrição:</label>
+            <input type="text" class="form-control" formControlName="descricao">
           </div>
 
           <div class="form-group col-md-4">
-            <label>Nome</label>
-            <input type="text" class="form-control" formControlName="nome">
-          </div>
-
-          <div class="form-group col-md-4">
-            <label>Valor</label>
-            <input type="number" class="form-control" formControlName="valor">
+            <label>Quantidade em estoque:</label>
+            <input type="number" class="form-control" formControlName="quantidade">
           </div>
         </div>
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Tamanho da roupa:</label>
+            <select class="form-control" formControlName="tamanho">
+              <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Preço custo:</label>
+            <input type="text" class="form-control" formControlName="precoCusto">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Valor da venda:</label>
+            <input type="number" class="form-control" formControlName="valorVenda">
+          </div>
+        </div>
+
         <div class="row">
           <div class="ml-3">
             <button *ngIf="!salvando" (click)="adicionar()" [disabled]="!formProduto.valid"

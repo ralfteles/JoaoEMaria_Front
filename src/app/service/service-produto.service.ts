@@ -8,15 +8,19 @@ import { StorageService } from './storage.service';
 })
 export class ServiceProdutoService {
   private header = new HttpHeaders();
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   obterProdutos() {
     return this.http.get(`${environment.urlApi}Produto`);
   }
 
-  obterProdutoPorId(id:number) {
+  obterProdutoPorId(id: number) {
     return this.http.get(`${environment.urlApi}Produto/${id}`);
   }
+  obterTamanhosDeRoupas() {
+    return this.http.get(`${environment.urlApi}Produto/ObterTamanhosDeRoupas`);
+  }
+
 
   adicionarProduto(obj) {
     return this.http.post(`${environment.urlApi}Produto`, obj);

@@ -14,22 +14,37 @@ export class NewProdutoComponent implements OnInit {
 
   formProduto: FormGroup;
   salvando: boolean = false;
+  tamanhoDeRoupas: any = [];
 
   constructor(
     public formBuilder: FormBuilder,
     public serviceProduto: ServiceProdutoService,
     public router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.obterTamanhoDeRoupas();
     this.novoProdutoForm();
   }
 
+  obterTamanhoDeRoupas() {
+    this.serviceProduto.obterTamanhosDeRoupas().subscribe(
+      (result) => {
+        this.tamanhoDeRoupas = result;
+      },
+      (error) => {
+      }
+    );
+  }
+
+
   novoProdutoForm() {
     this.formProduto = this.formBuilder.group({
-      imagem: ['',],
-      nome: ['', Validators.required],
-      valor: ['', Validators.required],
+      descricao: ['', Validators.required],
+      quantidade: ['', Validators.required],
+      tamanho: ['1', Validators.required],
+      precoCusto: ['', Validators.required],
+      valorVenda: ['', Validators.required],
     });
   }
 
