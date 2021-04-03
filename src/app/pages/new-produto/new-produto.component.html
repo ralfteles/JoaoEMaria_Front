@@ -1,0 +1,40 @@
+<div class="container">
+
+
+  <div class="card mt-3">
+    <div class="card-header">
+      <h4>Novo produto</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="formProduto">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Imagem</label>
+            <input type="file" class="form-control" formControlName="imagem">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Nome</label>
+            <input type="text" class="form-control" formControlName="nome">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Valor</label>
+            <input type="number" class="form-control" formControlName="valor">
+          </div>
+        </div>
+        <div class="row">
+          <div class="ml-3">
+            <button *ngIf="!salvando" (click)="adicionar()" [disabled]="!formProduto.valid"
+              class="btn btn-primary btn-icon-split">
+              <span class="text">Cadastrar</span>
+            </button>
+            <button *ngIf="salvando" disabled class="btn btn-primary btn-icon-split">
+              <i class="fas fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

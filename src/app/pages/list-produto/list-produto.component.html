@@ -1,0 +1,76 @@
+<div class="row mb-4" *ngIf="produtos.length > 0">
+  <h3 class="col text-center">Produtos</h3>
+</div>
+
+
+<table class="table table-hover" *ngIf="produtos.length > 0">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Produto</th>
+      <th scope="col">Quantidade em estoque</th>
+      <th scope="col">Tamanho</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let produto of produtos">
+    <tr>
+      <th>#</th>
+      <td>{{produto.descricao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.tamanhoRoupa}}</td>
+
+      <!-- <td>{{produto.valor | currency : 'R$'}}</td> -->
+
+      <td>
+        <button class="btn btn-primary col-4" (click)="openModal(produto)">Detalhes</button>
+        <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary col-4 ml-1">Editar</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+<ng-template #detalheModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Informações do produto {{produto.descricao}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <!-- <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Imagem</strong></label>
+        <span style="color: green;"><strong>{{produto.imagem}}</strong></span>
+      </div> -->
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Descrição</strong></label>
+        <span>{{produto.descricao}}</span>
+      </div>
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Quantidade em estoque</strong></label>
+        <span>{{produto.quantidade}}</span>
+      </div>
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Tamanho da roupa</strong></label>
+        <span>{{produto.tamanhoRoupa}}</span>
+      </div>
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Preço custo</strong></label>
+        <span>{{produto.precoCusto | currency : 'R$'}}</span>
+      </div>
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Valor da venda</strong></label>
+        <span>{{produto.valorVenda | currency : 'R$'}}</span>
+      </div>
+    </div>
+  </div>
+</ng-template>
