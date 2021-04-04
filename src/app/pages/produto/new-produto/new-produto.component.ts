@@ -35,7 +35,7 @@ export class NewProdutoComponent implements OnInit {
       (error) => {
       }
     );
-  }
+  } 
 
 
   novoProdutoForm() {

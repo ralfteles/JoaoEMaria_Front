@@ -11,14 +11,16 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   produtos: ProdutoModel[] = [];
   loading: boolean = false;
+  exibirAbaProduto: boolean = true;
 
   constructor(
     public serviceProduto: ServiceProdutoService,
     public router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obterProdutos();
+    this.obterVendas();
   }
 
   obterProdutos() {
@@ -29,12 +31,19 @@ export class HomeComponent implements OnInit {
       },
       (error) => {
         this.loading = false;
-        //this.router.navigate(['']);
       }
     );
   }
 
+  obterVendas() {
+ 
+  }
+
   logout() {
     this.router.navigate(['']);
+  }
+
+  trocarAba(aba) {
+    this.exibirAbaProduto = aba == 1 ? true : false;
   }
 }

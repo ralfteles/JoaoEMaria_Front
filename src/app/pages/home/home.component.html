@@ -8,7 +8,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Olá Rafael</span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Olá Administrador</span>
             <i class="fa fa-user-circle-o fa-3x"></i>
           </a>
 
@@ -26,8 +26,11 @@
 
 
     <div class="row mb-4 col-8" style=" margin-left: auto;    margin-right: auto;">
-      <button type="button" class="btn btn-primary btn-lg btn-block">CONTROLE DE PRODUTOS</button>
-      <button type="button" class="btn btn-secondary btn-lg btn-block">CONTROLE DE VENDAS</button>
+      <button type="button" class="btn btn-primary btn-lg btn-block" (click)="trocarAba(1)">CONTROLE DE
+        PRODUTOS</button>
+      <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="trocarAba(2)">CONTROLE DE
+        VENDAS</button>
     </div>
 
-    <app-list-produto [produtos]="produtos"></app-list-produto>
+    <app-list-produto *ngIf="exibirAbaProduto" [produtos]="produtos"></app-list-produto>
+    <app-list-venda *ngIf="!exibirAbaProduto"></app-list-venda>

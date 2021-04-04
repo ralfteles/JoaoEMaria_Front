@@ -40,10 +40,10 @@ export class EditProdutoComponent implements OnInit {
 
   editProdutoForm() {
     this.formProduto = this.formBuilder.group({
-      produtoId: [this.produto.produtoId],
-      imagem: [this.produto.imagem, ''],
-      nome: [this.produto.nome, Validators.required],
-      valor: [this.produto.valor, Validators.required],
+      // produtoId: [this.produto.produtoId],
+      // imagem: [this.produto.imagem, ''],
+      // nome: [this.produto.nome, Validators.required],
+      // valor: [this.produto.valor, Validators.required],
     });
   }
 

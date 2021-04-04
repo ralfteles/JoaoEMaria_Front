@@ -5,13 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
-import { NewProdutoComponent } from './pages/new-produto/new-produto.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ListProdutoComponent } from './pages/list-produto/list-produto.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { EditProdutoComponent } from './pages/edit-produto/edit-produto.component';
+import { NewProdutoComponent } from './pages/produto/new-produto/new-produto.component';
+import { ListProdutoComponent } from './pages/produto/list-produto/list-produto.component';
+import { EditProdutoComponent } from './pages/produto/edit-produto/edit-produto.component';
+import { ListVendaComponent } from './pages/venda/list-venda/list-venda.component';
+import { NewVendaComponent } from './pages/venda/new-venda/new-venda.component';
+import { EditVendaComponent } from './pages/venda/edit-venda/edit-venda.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +23,10 @@ import { EditProdutoComponent } from './pages/edit-produto/edit-produto.componen
     HomeComponent,
     NewProdutoComponent,
     ListProdutoComponent,
-    EditProdutoComponent
+    EditProdutoComponent,
+    ListVendaComponent,
+    NewVendaComponent,
+    EditVendaComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +34,8 @@ import { EditProdutoComponent } from './pages/edit-produto/edit-produto.componen
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
