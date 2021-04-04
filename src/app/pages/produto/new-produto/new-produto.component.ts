@@ -40,6 +40,7 @@ export class NewProdutoComponent implements OnInit {
 
   novoProdutoForm() {
     this.formProduto = this.formBuilder.group({
+      codigo: [''],
       descricao: ['', Validators.required],
       quantidade: ['', Validators.required],
       tamanho: ['1', Validators.required],

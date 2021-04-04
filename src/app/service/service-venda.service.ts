@@ -31,4 +31,8 @@ export class ServiceVendaService {
     return this.http.put(`${environment.urlApi}Venda`, obj);
   }
 
+  calcularVenda(obj) {
+    return this.http.post(`${environment.urlApi}Venda/CalcularTotalDaVenda`, obj);
+  }
+
 }

@@ -26,6 +26,7 @@ export class NewVendaComponent implements OnInit {
   produtos: any = [];
   produtosVenda: any = [];
   salvando: boolean = false;
+  calculandoVenda: boolean = false;
 
   dropdownList = [];
   selectedItems = [];
@@ -38,18 +39,13 @@ export class NewVendaComponent implements OnInit {
     this.novaVendaForm();
   }
 
-
-
-
   novaVendaForm() {
     this.formVenda = this.formBuilder.group({
-      // dataDaVenda: ['', Validators.required],
       cliente: ['', Validators.required],
-      // quantidade: ['', Validators.required],
       preco: ['', Validators.required],
-      observacao: ['', Validators.required],
+      observacao: [''],
       formaDePagamento: ['1', Validators.required],
-      produtosGuid: []
+      produtosNaVenda: []
     });
   }
 
@@ -65,10 +61,12 @@ export class NewVendaComponent implements OnInit {
 
   adicionar() {
     this.salvando = true;
+    this.formVenda.controls['produtosNaVenda'].setValue(this.produtosVenda);
     this.serviceVenda.adicionarVenda(this.formVenda.value).subscribe(
       (res: any) => {
         this.salvando = false;
         this.formVenda.reset();
+        this.produtosVenda = [];
         this.msgSucess(res.mensagem);
       },
       (error) => {
@@ -107,12 +105,28 @@ export class NewVendaComponent implements OnInit {
 
 
   checkProduto(e, produto) {
+    this.formVenda.controls['preco'].setValue('');
     if (e.target.checked) {
       this.produtosVenda.push(produto);
       console.log(this.produtosVenda);
     } else {
       this.produtosVenda.splice(this.produtosVenda.indexOf(produto), 1);
     }
+  }
+
+  calcularTotaDaVenda() {
+    this.calculandoVenda = true;
+
+    this.serviceVenda.calcularVenda(this.produtosVenda).subscribe(
+      (res: any) => {
+        this.calculandoVenda = false;
+        this.formVenda.controls['preco'].setValue(res);
+      },
+      (error) => {
+        this.calculandoVenda = false;
+        console.log('Erro ao calcular total da venda');
+      }
+    );
   }
 
 
