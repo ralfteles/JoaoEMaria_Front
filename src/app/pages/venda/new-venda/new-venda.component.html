@@ -42,7 +42,7 @@
 
                         <label class="mt-3"><b>Produtos:</b></label>
                         <div *ngFor="let produto of produtosVenda; let i = index">
-                            <li>{{produto?.descricao}} - <strong>R${{produto?.valorVenda}}</strong></li>
+                            <li>{{produto?.descricao}} - <strong>R${{produto?.valorVenda | currency : 'R$ '}}</strong></li>
                         </div>
 
                         <div *ngIf="produtosVenda.length > 0" class="form-group mt-3">
@@ -118,7 +118,7 @@
                     </th>
                     <td>{{produto.codigo}}</td>
                     <td>{{produto.descricao}}</td>
-                    <td>R$ {{produto.valorVenda}}</td>
+                    <td>R$ {{produto.valorVenda | currency : 'R$ '}}</td>
                     <td>{{produto.quantidade}}</td>
                 </tr>
             </tbody>
