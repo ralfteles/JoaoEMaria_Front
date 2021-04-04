@@ -13,31 +13,35 @@
     </div>
   </div>
   
-  
+  <div class="row">
+
+
   <table class="table table-hover">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Produto</th>
-        <th scope="col">Quantidade em estoque</th>
-        <th scope="col">Tamanho</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Valor da compra</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Data da venda</th>
         <th></th>
       </tr>
     </thead>
-    <!-- <tbody *ngFor="let produto of produtos">
+     <tbody *ngFor="let venda of vendas">
       <tr>
         <th>#</th>
-        <td>{{produto.descricao}}</td>
-        <td>{{produto.quantidade}}</td>
-        <td>{{produto.tamanhoRoupa}}</td>  
+        <td>{{venda.cliente}}</td>
+        <td>{{venda.preco | currency : 'R$ '}}</td>
+        <td>{{venda.quantidade}}</td>  
+        <td>{{venda.dataDaVendaFormat}}</td>
         <td>
           <button class="btn btn-primary col-4" (click)="openModal(produto)">Detalhes</button>
           <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary col-4 ml-1">Editar</a>
         </td>
       </tr>
-    </tbody> -->
+    </tbody> 
   </table>
-  
+</div>
   
    
   

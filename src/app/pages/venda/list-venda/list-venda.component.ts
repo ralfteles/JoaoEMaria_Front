@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { VendaModel } from 'src/app/model/VendaModel';
 
 @Component({
   selector: 'app-list-venda',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-venda.component.css']
 })
 export class ListVendaComponent implements OnInit {
+  
+  @ViewChild('detalheModal') detalheModal : TemplateRef<any>;
 
-  constructor() { }
+  @Input() vendas = VendaModel;
+  venda: VendaModel;
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
+
+
+  openModal(venda){
+    this.venda = venda
+    this.modalService.open(this.detalheModal, { size: 'xl' });
+  }  
 
 }

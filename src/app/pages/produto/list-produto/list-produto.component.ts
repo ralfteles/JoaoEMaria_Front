@@ -12,7 +12,6 @@ export class ListProdutoComponent implements OnInit {
   @ViewChild('detalheModal') detalheModal : TemplateRef<any>;
 
   @Input() produtos = ProdutoModel;
-  @Input() tipoSetor: string;
 
   produto: ProdutoModel;
 

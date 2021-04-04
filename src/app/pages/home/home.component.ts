@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceProdutoService } from 'src/app/service/service-produto.service';
 import { ProdutoModel } from 'src/app/model/produtoModel';
 import { Router } from '@angular/router';
+import { ServiceVendaService } from 'src/app/service/service-venda.service';
+import { VendaModel } from 'src/app/model/VendaModel';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +12,13 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   produtos: ProdutoModel[] = [];
+  vendas: VendaModel[] = [];
   loading: boolean = false;
   exibirAbaProduto: boolean = true;
 
   constructor(
     public serviceProduto: ServiceProdutoService,
+    public serviceVenda: ServiceVendaService,
     public router: Router
   ) { }
 
@@ -36,7 +40,15 @@ export class HomeComponent implements OnInit {
   }
 
   obterVendas() {
- 
+    this.serviceVenda.obterVendas().subscribe(
+      (result: VendaModel[]) => {
+        this.vendas = result;
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   logout() {
