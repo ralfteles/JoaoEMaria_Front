@@ -11,39 +11,54 @@ import Swal from 'sweetalert2';
   styleUrls: ['./edit-produto.component.css'],
 })
 export class EditProdutoComponent implements OnInit {
+
   formProduto: FormGroup;
   produto: ProdutoModel;
   id: number;
   salvando: boolean = false;
+  tamanhoDeRoupas: any = [];
 
   constructor(
     public formBuilder: FormBuilder,
     public serviceProduto: ServiceProdutoService,
     public router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => (this.id = params.id));
     this.obterProdutoPorId();
+    this.obterTamanhoDeRoupas();
   }
 
+  obterTamanhoDeRoupas() {
+    this.serviceProduto.obterTamanhosDeRoupas().subscribe(
+      (result) => {
+        this.tamanhoDeRoupas = result;
+      },
+      (error) => {
+      }
+    );
+  }
   obterProdutoPorId() {
     this.serviceProduto.obterProdutoPorId(this.id).subscribe(
       (result: ProdutoModel) => {
         this.produto = result;
         this.editProdutoForm();
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
   editProdutoForm() {
     this.formProduto = this.formBuilder.group({
-      // produtoId: [this.produto.produtoId],
-      // imagem: [this.produto.imagem, ''],
-      // nome: [this.produto.nome, Validators.required],
-      // valor: [this.produto.valor, Validators.required],
+      produtoId: [this.produto.produtoId],
+      codigo: [this.produto.codigo, Validators.required],
+      descricao: [this.produto.descricao, Validators.required],
+      quantidade: [this.produto.quantidade, Validators.required],
+      tamanho: [this.produto.tamanho, Validators.required],
+      precoCusto: [this.produto.precoCusto, Validators.required],
+      valorVenda: [this.produto.valorVenda, Validators.required]
     });
   }
 
@@ -52,7 +67,6 @@ export class EditProdutoComponent implements OnInit {
     this.serviceProduto.atualizarProduto(this.formProduto.value).subscribe(
       (res: any) => {
         this.salvando = false;
-        this.formProduto.reset();
         this.msgSucess(res.mensagem);
       },
       (error) => {

@@ -5,6 +5,7 @@ export class ProdutoModel {
   quantidade: number;
   precoCusto: number;
   valorVenda: number;
+  tamanho: number;
   tamanhoRoupa: string;
   observacao: string;
 
