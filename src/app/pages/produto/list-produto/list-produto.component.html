@@ -30,7 +30,6 @@
       <td>{{produto.descricao}}</td>
       <td>{{produto.quantidade}}</td>
       <td>{{produto.tamanhoRoupa}}</td>
-
       <td>
         <button class="btn btn-primary col-4" (click)="openModal(produto)">Detalhes</button>
         <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary col-4 ml-1">Editar</a>
@@ -38,7 +37,6 @@
     </tr>
   </tbody>
 </table>
-
 
 
 

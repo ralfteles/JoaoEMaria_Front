@@ -1,12 +1,12 @@
 export class VendaModel {
-    DataDaVendaFormat: string;
-    DataDaVenda: Date;
-    VendaId: any;
-    Cliente: string;
-    Quantidade: number;
-    Preco: number;
-    FormaPagamento: string;
-    Observacao: string;
+    dataDaVendaFormat: string;
+    dataDaVenda: Date;
+    vendaId: any;
+    cliente: string;
+    quantidade: number;
+    preco: number;
+    formaPagamento: string;
+    observacao: string;
     produtosNaVenda: any[];
   
   

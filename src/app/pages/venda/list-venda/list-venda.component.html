@@ -1,53 +1,49 @@
-<div class="row mb-4" >
-    <h3 class="col text-center">Vendas</h3>
-  </div>
-  
-  <div class="row ml-0 mb-3">
-    <div class="input-group">
-      <a routerLink="/addVenda"  class="btn btn-primary btn-icon-split">
-        <span class="icon text-white-50">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span class="text"> Adicionar Venda</span>
-      </a>
-    </div>
-  </div>
-  
-  <div class="row">
-
-
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Valor da compra</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">Data da venda</th>
-        <th></th>
-      </tr>
-    </thead>
-     <tbody *ngFor="let venda of vendas">
-      <tr>
-        <th>#</th>
-        <td>{{venda.cliente}}</td>
-        <td>{{venda.preco | currency : 'R$ '}}</td>
-        <td>{{venda.quantidade}}</td>  
-        <td>{{venda.dataDaVendaFormat}}</td>
-        <td>
-          <button class="btn btn-primary col-4" (click)="openModal(produto)">Detalhes</button>
-          <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary col-4 ml-1">Editar</a>
-        </td>
-      </tr>
-    </tbody> 
-  </table>
+<div class="row mb-4">
+  <h3 class="col text-center">Vendas</h3>
 </div>
-  
-   
-  
-  <!-- <ng-template #detalheModal let-c="close" let-d="dismiss">
+
+<div class="row ml-0 mb-3">
+  <div class="input-group">
+    <a routerLink="/addVenda" class="btn btn-secondary btn-icon-split">
+      <span class="icon text-white-50">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span class="text"> Adicionar Venda</span>
+    </a>
+  </div>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Cliente</th>
+      <th scope="col">Valor da compra</th>
+      <th scope="col">Quantidade</th>
+      <th scope="col">Data da venda</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let venda of vendas">
+    <tr>
+      <th>#</th>
+      <td>{{venda.cliente}}</td>
+      <td>{{venda.preco | currency : 'R$ '}}</td>
+      <td>{{venda.quantidade}}</td>
+      <td>{{venda.dataDaVendaFormat}}</td>
+      <td>
+        <button class="btn btn-secondary col-4" (click)="openModal(venda)">Detalhes</button>
+        <a [routerLink]="['/editVenda', venda.vendaId]" class="btn btn-secondary col-4 ml-1">Editar</a> 
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+ <ng-template #detalheModal let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Informações do produto {{produto.descricao}}</h4>
+      <h4 class="modal-title" id="modal-basic-title">Informações da venda</h4>
       <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -55,30 +51,27 @@
     <div class="modal-body">
       <div class="row">
         <div class="form-group col-md-4 d-flex flex-column">
-          <label><strong>Descrição:</strong></label>
-          <span>{{venda.descricao}}</span>
+          <label><strong>Cliente:</strong></label>
+          <span>{{venda.cliente}}</span>
         </div>
   
         <div class="form-group col-md-4 d-flex flex-column">
-          <label><strong>Quantidade em estoque:</strong></label>
-          <span>{{produto.quantidade}}</span>
+          <label><strong>Forma de pagamento:</strong></label>
+          <span>{{venda.formaPagamento}}</span>
         </div>
-  
-        <div class="form-group col-md-4 d-flex flex-column">
-          <label><strong>Tamanho da roupa:</strong></label>
-          <span>{{produto.tamanhoRoupa}}</span>
-        </div>
-  
-        <div class="form-group col-md-4 d-flex flex-column">
-          <label><strong>Preço custo:</strong></label>
-          <span>{{produto.precoCusto | currency : 'R$'}}</span>
-        </div>
-  
+
         <div class="form-group col-md-4 d-flex flex-column">
           <label><strong>Valor da venda:</strong></label>
-          <span>{{produto.valorVenda | currency : 'R$'}}</span>
+          <span>{{venda.preco | currency : 'R$'}}</span>
         </div>
+
+        <div class="form-group col-md-4 d-flex flex-column">
+          <label><strong>Produtos:</strong></label>
+          <div *ngFor="let venda of venda.produtosNaVenda" >
+            <li>{{venda.descricao}} - {{venda.valorVenda | currency : 'R$'}}</li>
+          </div>
+        </div>
+
       </div>
     </div>
-  </ng-template> -->
-  
+  </ng-template>
