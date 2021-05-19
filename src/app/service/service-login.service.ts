@@ -11,6 +11,6 @@ export class ServiceLoginService {
   constructor(public http: HttpClient) {}
 
   Autenticar(obj) {
-    return this.http.post(environment.Autenticacao, obj);
+    //return this.http.post(environment.Autenticacao, obj);
   }
 }

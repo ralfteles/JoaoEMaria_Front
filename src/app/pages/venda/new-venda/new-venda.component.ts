@@ -10,14 +10,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-new-venda',
   templateUrl: './new-venda.component.html',
-  styleUrls: ['./new-venda.component.css']
+  styleUrls: ['./new-venda.component.css'],
 })
 export class NewVendaComponent implements OnInit {
-
-  constructor(public formBuilder: FormBuilder,
+  constructor(
+    public formBuilder: FormBuilder,
     public serviceVenda: ServiceVendaService,
     public serviceProduto: ServiceProdutoService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal
+  ) {}
 
   @ViewChild('produtoModal') detalheModal: TemplateRef<any>;
 
@@ -25,13 +26,15 @@ export class NewVendaComponent implements OnInit {
   formasDePagamento: any = [];
   produtos: any = [];
   produtosVenda: any = [];
+  parcelasVenda: any = [];
   salvando: boolean = false;
   calculandoVenda: boolean = false;
+  isParcelado: boolean = false;
+  quantidadeDeParcelas: number;
 
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
-
 
   ngOnInit(): void {
     this.obterFormasDePagamento();
@@ -45,7 +48,9 @@ export class NewVendaComponent implements OnInit {
       preco: ['', Validators.required],
       observacao: [''],
       formaDePagamento: ['1', Validators.required],
-      produtosNaVenda: []
+      quantidadeDeParcelas:[''],
+      produtosNaVenda: [],
+      parcelasNaVenda: [],
     });
   }
 
@@ -54,8 +59,7 @@ export class NewVendaComponent implements OnInit {
       (result) => {
         this.formasDePagamento = result;
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
@@ -80,8 +84,7 @@ export class NewVendaComponent implements OnInit {
       (result: ProdutoModel[]) => {
         this.produtos = result;
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
@@ -89,6 +92,9 @@ export class NewVendaComponent implements OnInit {
     Swal.fire(msg, '', 'success');
   }
 
+  msgInfo(msg: string) {
+    Swal.fire(msg, '', 'info');
+  }
 
 
   openModal() {
@@ -102,7 +108,6 @@ export class NewVendaComponent implements OnInit {
 
     this.modalService.open(this.detalheModal, { size: 'xl' });
   }
-
 
   checkProduto(e, produto) {
     this.formVenda.controls['preco'].setValue('');
@@ -129,5 +134,35 @@ export class NewVendaComponent implements OnInit {
     );
   }
 
+  calularParcelas() {
+    this.formVenda.controls['parcelasNaVenda'].setValue([]);
+    this.parcelasVenda = [];
 
+    if(this.formVenda.value.quantidadeDeParcelas == ''){
+      this.msgInfo('Informe a quantidade de parcelas')
+      return;
+    }
+    this.serviceVenda
+      .calcularParcelas(this.formVenda.value.quantidadeDeParcelas, this.formVenda.value.preco)
+      .subscribe(
+        (res: any) => {
+          this.parcelasVenda = res;
+          this.formVenda.controls['parcelasNaVenda'].setValue(
+            this.parcelasVenda
+          );
+        },
+        (error) => {
+          console.log('Erro ao calcular total da venda');
+        }
+      );
+  }
+
+  selectFormaDePagamento(tipo) {
+    if (tipo == '4') this.isParcelado = true;
+    else {
+      this.isParcelado = false;
+      this.formVenda.controls['parcelasNaVenda'].setValue([]);
+      this.parcelasVenda = [];
+    }
+  }
 }

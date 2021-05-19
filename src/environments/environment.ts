@@ -3,9 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  urlApi: "https://localhost:5001/api/",
-  Autenticacao: "https://dev.sitemercado.com.br/api/login/"
+  production: true,
+  urlApi: "https://localhost:5001/api/"
 };
 
 /*

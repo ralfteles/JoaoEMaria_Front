@@ -8,7 +8,7 @@ export class VendaModel {
     formaPagamento: string;
     observacao: string;
     produtosNaVenda: any[];
-  
+    parcelasNaVenda: any[];
   
     constructor() { }
   }

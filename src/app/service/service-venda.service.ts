@@ -35,4 +35,8 @@ export class ServiceVendaService {
     return this.http.post(`${environment.urlApi}Venda/CalcularTotalDaVenda`, obj);
   }
 
+  calcularParcelas(quantidade, valor) {
+    return this.http.get(`${environment.urlApi}Venda/CalcularParcelas/${quantidade}/${valor}`);
+  }
+
 }

@@ -58,6 +58,16 @@
           <span>{{venda.formaPagamento}}</span>
         </div>
 
+        <div class="form-group col-md-4 d-flex flex-column"
+        *ngIf="venda.parcelasNaVenda.length > 0" >
+          <label><strong>Parcelas:</strong></label> 
+          <div *ngFor="let parcela of venda.parcelasNaVenda" >
+            <li>{{parcela?.valor | currency : 'R$ '}} - 
+              {{parcela?.vencimentoFormat}} <strong>({{parcela?.statusPagamentoStr}})</strong>
+            </li>
+          </div>
+        </div>
+
         <div class="form-group col-md-4 d-flex flex-column">
           <label><strong>Valor da venda:</strong></label>
           <span>{{venda.preco | currency : 'R$'}}</span>
