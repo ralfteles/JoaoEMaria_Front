@@ -67,7 +67,7 @@ export class EditProdutoComponent implements OnInit {
     this.serviceProduto.atualizarProduto(this.formProduto.value).subscribe(
       (res: any) => {
         this.salvando = false;
-        this.msgSucess(res.mensagem);
+        this.msgSucess(res.data.message);
       },
       (error) => {
         this.salvando = false;

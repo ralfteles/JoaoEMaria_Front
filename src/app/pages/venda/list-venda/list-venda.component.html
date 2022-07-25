@@ -19,7 +19,7 @@
       <th scope="col">#</th>
       <th scope="col">Cliente</th>
       <th scope="col">Valor da compra</th>
-      <th scope="col">Data da venda</th>
+      <th scope="col">Forma de Pagamento</th>
       <th></th>
     </tr>
   </thead>
@@ -28,7 +28,7 @@
       <th>#</th>
       <td>{{venda.cliente}}</td>
       <td>{{venda.preco | currency : 'R$ '}}</td>
-      <td>{{venda.dataDaVendaFormat}}</td>
+      <td>{{venda.formaPagamento}}</td>
       <td>
         <button class="btn btn-secondary col-4" (click)="openModal(venda)">Detalhes</button>
         <a [routerLink]="['/editVenda', venda.vendaId]" class="btn btn-secondary col-4 ml-1">Editar</a> 
@@ -79,7 +79,12 @@
             <li>{{venda.descricao}} - {{venda.valorVenda | currency : 'R$'}}</li>
           </div>
         </div>
-
+      </div>
+            <div class="row">
+        <div class="form-group col-md-4 d-flex flex-column">
+          <label><strong>Data da Venda:</strong></label>
+          <span>{{venda.dataDaVendaFormat}}</span>
+        </div>
       </div>
     </div>
   </ng-template>

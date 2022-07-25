@@ -55,7 +55,7 @@ export class NewProdutoComponent implements OnInit {
       (res: any) => {
         this.salvando = false;
         this.formProduto.reset();
-        this.msgSucess(res.mensagem);
+        this.msgSucess(res.data.message);
       },
       (error) => {
         this.salvando = false;

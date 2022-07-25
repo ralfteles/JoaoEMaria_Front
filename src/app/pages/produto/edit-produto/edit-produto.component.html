@@ -18,14 +18,14 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label>Quantidade em estoque:</label>
+            <label>Quantidade:</label>
             <input type="number" class="form-control" formControlName="quantidade">
           </div>
         </div>
 
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Tamanho da roupa:</label>
+            <label>Número do par:</label>
             <select class="form-control" formControlName="tamanho">
               <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
             </select>

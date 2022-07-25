@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit {
     if(this.formLogin.value.Username == 'admin' && this.formLogin.value.Password == 'admin'){
       this.validando = false;
       this.router.navigate(['home']);
+    } else{
+      this.validando = false;
+      alert('Login ou Senha invalido')
     }
 
     // this.serviceAuth.Autenticar(this.formLogin.value).subscribe(

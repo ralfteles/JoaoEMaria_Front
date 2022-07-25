@@ -71,7 +71,7 @@ export class NewVendaComponent implements OnInit {
         this.salvando = false;
         this.formVenda.reset();
         this.produtosVenda = [];
-        this.msgSucess(res.mensagem);
+        this.msgSucess(res.data.message);
       },
       (error) => {
         this.salvando = false;
