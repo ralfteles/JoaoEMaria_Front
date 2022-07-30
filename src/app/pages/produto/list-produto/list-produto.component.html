@@ -27,6 +27,12 @@
   <tbody *ngFor="let produto of produtos">
     <tr>
       <th>#</th>
+      <td>
+        <!-- <img src="~/Imagens/default.jpg" class="rounded-circle" height="40" width="40" asp-append-version="true"/> -->
+
+        <img src="{{produto.imagem}}"  class="rounded-circle" height="40" width="40" asp-append-version="true"/>
+
+      </td>
       <td>{{produto.descricao}}</td>
       <td>{{produto.quantidade}}</td>
       <td>{{produto.tamanhoRoupa}}</td>

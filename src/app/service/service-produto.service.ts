@@ -29,4 +29,8 @@ export class ServiceProdutoService {
   atualizarProduto(obj) {
     return this.http.put(`${environment.urlApi}Produto`, obj);
   }
+
+  uploadFoto(obj) {
+    return this.http.post(`${environment.urlApi}Produto/uploadFile`, obj);
+  }
 }
