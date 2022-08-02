@@ -6,43 +6,85 @@
     <div class="card-body">
       <form [formGroup]="formProduto">
         <div class="row">
-
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-2">
             <label>Código:</label>
             <input type="text" class="form-control" formControlName="codigo">
           </div>
-
-          <div class="form-group col-md-4">
-            <label>Descrição:</label>
+          <div class="form-group col-md-5">
+            <label>Nome do Calçado:</label>
             <input type="text" class="form-control" formControlName="descricao">
-          </div>
-
-          <div class="form-group col-md-4">
-            <label>Quantidade:</label>
-            <input type="number" class="form-control" formControlName="quantidade">
           </div>
         </div>
 
         <div class="row">
-          <div class="form-group col-md-4">
-            <label>Número do par:</label>
-            <select class="form-control" formControlName="tamanho">
-              <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-2">
             <label>Preço custo:</label>
             <input type="text" class="form-control" formControlName="precoCusto">
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-2">
             <label>Valor da venda:</label>
             <input type="text" class="form-control" formControlName="valorVenda">
           </div>
         </div>
 
-        <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
+        <div class="row">
+          <div class="form-group col-md-8">
+            <label>Observação:</label>
+            <textarea class="form-control" style="resize: none; height: 150px;" maxlength="500"
+              formControlName="observacao"></textarea>
+          </div>
+        </div>
+
+        <!-- <div class="row"> COMENTADO ATÉ RESOLVER A QUESTÃO DA IMAGEM
+          <div class="form-group col-md-4">
+            <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
+          </div>
+        </div> -->
+
+        <div class="form-group col-md-12 border rounded" formArrayName="produtoTamanho"
+          style="background-color: #f5f5f5; ">
+          <div class="row ml-1">
+            <div *ngFor="let tamanho of produtoTamanho().controls; let i=index" [formGroupName]="i">
+
+              <div class="row col-12">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Tamanho {{i+1}}:</label>
+                    <select class="form-control" formControlName="tamanho">
+                      <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-groufa-pull-right">
+                    <label>Quantidade:</label>
+                    <input type="number" class="form-control" formControlName="quantidade">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Observação:</label>
+                    <textarea class="form-control" style="resize: none; height: 150px;" maxlength="500"
+                      formControlName="descricao"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row col-12 mb-1">
+                <div class="col-md-2 mt-1">
+                  <button (click)="removerTamanho(i)" class="btn btn-danger">Remover</button>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+
+        <div class="row ml-1 mb-4">
+          <button type="button" (click)="adicionarTamanho()" [disabled]="!formProduto.valid"
+            class="btn btn-info">Adicionar tamanho</button>
+        </div>
+
+
 
         <div class="row">
           <div class="ml-3">

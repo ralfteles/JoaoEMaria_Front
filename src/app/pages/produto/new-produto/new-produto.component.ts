@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { ServiceProdutoService } from 'src/app/service/service-produto.service';
 import { ProdutoModel } from 'src/app/model/produtoModel';
 import Swal from 'sweetalert2';
@@ -17,6 +17,7 @@ export class NewProdutoComponent implements OnInit {
   tamanhoDeRoupas: any = [];
   fileToUpload: any;
   nomeImagem: string;
+  qtdTamanho: any = 0;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -41,12 +42,12 @@ export class NewProdutoComponent implements OnInit {
   novoProdutoForm() {
     this.formProduto = this.formBuilder.group({
       codigo: [''],
-      descricao: ['', Validators.required],
-      quantidade: ['', Validators.required],
-      tamanho: ['1', Validators.required],
+      descricao: [''],
+      observacao: [''],
       precoCusto: ['', Validators.required],
       valorVenda: ['', Validators.required],
       imagem: [''],
+      produtoTamanho: this.formBuilder.array([]),
     });
   }
 
@@ -63,7 +64,6 @@ export class NewProdutoComponent implements OnInit {
       },
       (error) => {
         this.salvando = false;
-
       }
     );
   }
@@ -90,5 +90,29 @@ export class NewProdutoComponent implements OnInit {
         this.salvando = false;
         console.log('Erro ao fazer upload da imagem');
       };
+  }
+
+
+  //Loop dos pares
+  adicionarTamanho() {
+    this.produtoTamanho().push(this.newQuantity());
+  }
+
+  removerTamanho(i: number) {
+    this.produtoTamanho().removeAt(i);
+  }
+
+  produtoTamanho(): FormArray {
+    return this.formProduto.get('produtoTamanho') as FormArray;
+  }
+
+  newQuantity(): FormGroup {
+    return this.formBuilder.group({
+      tamanho: '',
+      // tamanho: this.tamanhoDeRoupas[0],
+      
+      descricao: '',
+      quantidade: '',
+    });
   }
 }

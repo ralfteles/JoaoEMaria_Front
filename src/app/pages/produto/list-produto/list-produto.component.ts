@@ -14,6 +14,7 @@ export class ListProdutoComponent implements OnInit {
   @Input() produtos = ProdutoModel;
 
   produto: ProdutoModel;
+  produtoTamanho: any;
 
   constructor(private modalService: NgbModal) { }
 
@@ -22,6 +23,7 @@ export class ListProdutoComponent implements OnInit {
 
   openModal(produto){
     this.produto = produto
+    this.produtoTamanho = produto.produtoTamanho;
     this.modalService.open(this.detalheModal, { size: 'xl' });
   }  
   
