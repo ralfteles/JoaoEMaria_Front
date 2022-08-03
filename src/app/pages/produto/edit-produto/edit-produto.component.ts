@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoModel } from 'src/app/model/produtoModel';
 import { ServiceProdutoService } from 'src/app/service/service-produto.service';
@@ -11,24 +11,26 @@ import Swal from 'sweetalert2';
   styleUrls: ['./edit-produto.component.css'],
 })
 export class EditProdutoComponent implements OnInit {
-
   formProduto: FormGroup;
   produto: ProdutoModel;
   id: number;
   salvando: boolean = false;
   tamanhoDeRoupas: any = [];
+  qtdProdutoTamanho: any;
 
   constructor(
     public formBuilder: FormBuilder,
     public serviceProduto: ServiceProdutoService,
     public router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => (this.id = params.id));
     this.obterProdutoPorId();
     this.obterTamanhoDeRoupas();
+
+    
   }
 
   obterTamanhoDeRoupas() {
@@ -36,8 +38,7 @@ export class EditProdutoComponent implements OnInit {
       (result) => {
         this.tamanhoDeRoupas = result;
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
   obterProdutoPorId() {
@@ -45,21 +46,39 @@ export class EditProdutoComponent implements OnInit {
       (result: ProdutoModel) => {
         this.produto = result;
         this.editProdutoForm();
+        this.popularProdutoTamanho();
       },
-      (error) => { }
+      (error) => {}
     );
   }
 
   editProdutoForm() {
     this.formProduto = this.formBuilder.group({
       produtoId: [this.produto.produtoId],
-      codigo: [this.produto.codigo, Validators.required],
+      codigo: [this.produto.codigo],
       descricao: [this.produto.descricao, Validators.required],
-      quantidade: [this.produto.quantidade, Validators.required],
-      tamanho: [this.produto.tamanho, Validators.required],
+      observacao: [this.produto.observacao],
       precoCusto: [this.produto.precoCusto, Validators.required],
-      valorVenda: [this.produto.valorVenda, Validators.required]
+      valorVenda: [this.produto.valorVenda, Validators.required],
+      imagem: [''],
+
+      produtoTamanho: this.formBuilder.array([])
     });
+  }
+
+  popularProdutoTamanho() {
+    for (var i = 0; i < this.produto.produtoTamanho.length; i++) {
+      this.produtoTamanho().push(
+        this.formBuilder.group({
+          tamanho: this.produto.produtoTamanho[i].tamanho,
+          descricao: this.produto.produtoTamanho[i].descricao,
+          quantidade: this.produto.produtoTamanho[i].quantidade,
+          tamanhoTexto: this.produto.produtoTamanho[i].tamanhoTexto,
+        })
+      );
+    }
+
+    this.qtdProdutoTamanho = this.produto.produtoTamanho.length;
   }
 
   atualizar() {
@@ -77,5 +96,26 @@ export class EditProdutoComponent implements OnInit {
 
   msgSucess(msg: string) {
     Swal.fire(msg, '', 'success');
+  }
+
+  //Loop dos pares
+  adicionarTamanho() {
+    this.produtoTamanho().push(this.newQuantity());
+  }
+
+  removerTamanho(i: number) {
+    this.produtoTamanho().removeAt(i);
+  }
+
+  produtoTamanho(): FormArray {
+    return this.formProduto.get('produtoTamanho') as FormArray;
+  }
+
+  newQuantity(): FormGroup {
+    return this.formBuilder.group({
+      tamanho: '',
+      descricao: '',
+      quantidade: '',
+    });
   }
 }

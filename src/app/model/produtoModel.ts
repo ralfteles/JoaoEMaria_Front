@@ -8,6 +8,7 @@ export class ProdutoModel {
   tamanho: number;
   tamanhoRoupa: string;
   observacao: string;
+  produtoTamanho: any;
 
 
   constructor() { }

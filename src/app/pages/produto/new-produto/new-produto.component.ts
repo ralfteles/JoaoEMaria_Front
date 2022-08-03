@@ -109,8 +109,6 @@ export class NewProdutoComponent implements OnInit {
   newQuantity(): FormGroup {
     return this.formBuilder.group({
       tamanho: '',
-      // tamanho: this.tamanhoDeRoupas[0],
-      
       descricao: '',
       quantidade: '',
     });
