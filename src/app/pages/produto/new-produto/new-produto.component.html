@@ -41,12 +41,13 @@
             <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
           </div>
         </div> -->
-
+ 
         <div class="form-group col-md-12 border rounded" formArrayName="produtoTamanho"
           style="background-color: #f5f5f5; ">
-          <div class="row ml-1">
-            <div *ngFor="let tamanho of produtoTamanho().controls; let i=index" [formGroupName]="i">
-
+          <div class="row">
+            <div style="border-style: ridge; 
+            border-radius: 10px 10px 10px 10px;" class="ml-2 mt-2 mb-2"
+            *ngFor="let tamanho of produtoTamanho().controls; let i=index" [formGroupName]="i">
               <div class="row col-12">
                 <div class="col-md-12">
                   <div class="form-group">
