@@ -61,6 +61,7 @@ export class NewProdutoComponent implements OnInit {
         this.salvando = false;
         this.formProduto.reset();
         this.msgSucess(res.data.message);
+        this.removerTodosTamanhos();
       },
       (error) => {
         this.salvando = false;
@@ -112,5 +113,11 @@ export class NewProdutoComponent implements OnInit {
       descricao: '',
       quantidade: '',
     });
+  }
+
+  removerTodosTamanhos() {
+    while (this.produtoTamanho().length !== 0) {
+      this.produtoTamanho().removeAt(0);
+    }
   }
 }
