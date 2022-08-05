@@ -3,7 +3,7 @@
 
   <div class="card mt-3">
     <div class="card-header">
-      <h4>Nova Venda</h4>
+      <h4>Realizar Venda</h4>
     </div>
     <div class="card-body">
       <form [formGroup]="formVenda">
@@ -29,13 +29,19 @@
               <span class="text">Adicionar produto na venda</span>
             </button><br />
 
-            <label class="mt-3"><b>Produtos:</b></label>
-            <div *ngFor="let produto of produtosVenda; let i = index">
-              <li>{{produto?.descricao}} - <strong>{{produto?.valorVenda | currency : 'R$ '}}</strong>
-              </li>
+            <div *ngIf="confirmarReserva">
+              <label class="mt-3"><b>Produtos:</b></label>
+              <div *ngFor="let produto of produtosVenda; let i = index">
+                <li>{{produto?.descricao}} - preço: <strong>{{produto?.valorVenda | currency : 'R$ '}}</strong>
+                </li>
+                <div *ngFor="let tamanho of produto.produtoTamanho; let i = index">
+                 - Número: {{tamanho?.tamanhoTexto}} - Quantidade: {{tamanho?.quantidadeCompra}}
+                </div>
+                <hr/>
+              </div>
             </div>
 
-            <div *ngIf="produtosVenda.length > 0" class="form-group mt-3">
+            <div *ngIf="confirmarReserva" class="form-group mt-3">
               <button (click)="calcularTotaDaVenda()" [disabled]="calculandoVenda"
                 class="btn btn-info btn-icon-split col-md-3">
                 <span class="text">Calcular total da venda</span>
@@ -121,38 +127,82 @@
   <div class="modal-body">
     <div class="table-responsive">
 
-    
-    <table class="table table-hover table-wrapper">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Produto</th>
-          <th scope="col">Tamanho</th>
-          <th scope="col">Preço</th>
-          <th scope="col">Quantidade em estoque</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let produto of produtos">
-        <tr>
-          <th *ngIf="produto.quantidade <= 0">
-            <input id="check" type="checkbox" disabled>
-          </th>
-          <th *ngIf="produto.quantidade > 0">
-            <input id="check" type="checkbox" *ngIf="!produto.selecionado" (change)="checkProduto($event, produto)">
 
-            <input id="check" type="checkbox" *ngIf="produto.selecionado" checked
-              (change)="checkProduto($event, produto)">
-          </th>
-          <td>{{produto.descricao}}</td>
-          <td>{{produto.tamanhoRoupa}}</td>
-          <td>{{produto.valorVenda | currency : 'R$ '}}</td>
-          <td>{{produto.quantidade}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <table class="table table-hover table-wrapper">
+        <thead>
+          <tr>
+            <th scope="col">Produto</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Detalhe</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let produto of produtos">
+          <tr>
+            <td>{{produto.descricao}}</td>
+            <td>{{produto.valorVenda | currency : 'R$ '}}</td>
+            <td>
+              <button (click)="openModalTamanho(produto.produtoId)" class="btn btn-success btn-icon-split">
+                <span class="text">Calçados</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="c('Close click')">Ok</button>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #produtoTamanhoModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Selecionar Números</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table table-hover table-wrapper">
+        <thead>
+          <tr>
+            <th></th>
+            <th scope="col">Tamanho</th>
+            <th scope="col">Em estoque</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let produto of produtosTamanho">
+          <tr>
+            <th *ngIf="produto.quantidade <= 0">
+              <input id="check" type="checkbox" disabled>
+            </th>
+            <th *ngIf="produto.quantidade > 0">
+              <input id="check" type="checkbox" *ngIf="produto.selecionado" checked
+                (change)="checkProdutoTamanho($event, produto)">
+
+              <input id="check" type="checkbox" *ngIf="!produto.selecionado"
+                (change)="checkProdutoTamanho($event, produto)">
+
+
+              <input *ngIf="produto.selecionado" ngModel="quantidadeCompra"
+               type="number" class="form-control col-md-4"
+               [(ngModel)]="produto.quantidadeCompra"
+                placeholder="Quantidade" (input)="setQuantidadeCompra(produto, $event.target.value)">
+            </th>
+
+
+            <td>{{produto.tamanhoTexto}}</td>
+            <td>{{produto.quantidade}}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="reservar()">Reservar</button>
     </div>
   </div>
 </ng-template>

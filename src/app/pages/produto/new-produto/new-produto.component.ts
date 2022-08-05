@@ -111,7 +111,7 @@ export class NewProdutoComponent implements OnInit {
     return this.formBuilder.group({
       tamanho: '',
       descricao: '',
-      quantidade: '',
+      quantidade: 0,
     });
   }
 
