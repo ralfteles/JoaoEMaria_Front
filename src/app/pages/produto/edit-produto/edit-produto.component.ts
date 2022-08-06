@@ -60,8 +60,8 @@ export class EditProdutoComponent implements OnInit {
       observacao: [this.produto.observacao],
       precoCusto: [this.produto.precoCusto, Validators.required],
       valorVenda: [this.produto.valorVenda, Validators.required],
+      sexoProduto:[this.produto.sexoProduto],
       imagem: [''],
-
       produtoTamanho: this.formBuilder.array([])
     });
   }
@@ -73,13 +73,18 @@ export class EditProdutoComponent implements OnInit {
           tamanho: this.produto.produtoTamanho[i].tamanho,
           descricao: this.produto.produtoTamanho[i].descricao,
           quantidade: this.produto.produtoTamanho[i].quantidade,
-          tamanhoTexto: this.produto.produtoTamanho[i].tamanhoTexto,
+          cor: this.produto.produtoTamanho[i].cor,
         })
       );
     }
 
     this.qtdProdutoTamanho = this.produto.produtoTamanho.length;
   }
+
+  // tamanho: '',
+  // descricao: '',
+  // quantidade: 0,
+  // cor: ''
 
   atualizar() {
     this.salvando = true;
@@ -116,6 +121,7 @@ export class EditProdutoComponent implements OnInit {
       tamanho: '',
       descricao: '',
       quantidade: '',
+      cor:''
     });
   }
 }

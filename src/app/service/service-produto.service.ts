@@ -30,6 +30,10 @@ export class ServiceProdutoService {
     return this.http.put(`${environment.urlApi}Produto`, obj);
   }
 
+  removerProduto(produtoId) {
+    return this.http.delete(`${environment.urlApi}Produto/${produtoId}`);
+  }
+
   uploadFoto(obj) {
     return this.http.post(`${environment.urlApi}Produto/uploadFile`, obj);
   }

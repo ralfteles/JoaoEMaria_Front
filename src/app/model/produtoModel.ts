@@ -9,6 +9,7 @@ export class ProdutoModel {
   tamanhoRoupa: string;
   observacao: string;
   produtoTamanho: any;
+  sexoProduto: any;
 
 
   constructor() { }

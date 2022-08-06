@@ -26,6 +26,16 @@
             <label>Valor da venda:</label>
             <input type="text" class="form-control" formControlName="valorVenda">
           </div>
+
+          <div class="form-group col-md-2">
+            <label>Tipo:</label>
+            <select class="form-control" formControlName="sexoProduto">
+              <option value="1">Masculino</option>
+              <option value="2">Feminino</option>
+              <option value="3">Infantil</option>
+            </select>
+          </div>
+
         </div>
 
         <div class="row">
@@ -52,9 +62,10 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Tamanho {{i+1}}:</label>
-                    <select class="form-control" formControlName="tamanho">
+                    <!-- <select class="form-control" formControlName="tamanho">
                       <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
-                    </select>
+                    </select> -->
+                    <input type="number" class="form-control" formControlName="tamanho">
                   </div>
 
                   <div class="form-groufa-pull-right">
@@ -62,10 +73,9 @@
                     <input type="number" class="form-control" formControlName="quantidade">
                   </div>
 
-                  <div class="form-group">
-                    <label>Observação:</label>
-                    <textarea class="form-control" style="resize: none; height: 150px;" maxlength="500"
-                      formControlName="descricao"></textarea>
+                  <div class="form-groufa-pull-right">
+                    <label>Cor:</label>
+                    <input type="text" class="form-control" formControlName="cor">
                   </div>
                 </div>
               </div>

@@ -47,6 +47,7 @@ export class NewProdutoComponent implements OnInit {
       precoCusto: ['', Validators.required],
       valorVenda: ['', Validators.required],
       imagem: [''],
+      sexoProduto:['1'],
       produtoTamanho: this.formBuilder.array([]),
     });
   }
@@ -112,6 +113,7 @@ export class NewProdutoComponent implements OnInit {
       tamanho: '',
       descricao: '',
       quantidade: 0,
+      cor: ''
     });
   }
 

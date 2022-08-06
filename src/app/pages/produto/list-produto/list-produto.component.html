@@ -34,10 +34,11 @@
 
       </td>
       <td>{{produto.descricao}}</td>
-      <td>{{produto.valorVenda}}</td>
+      <td>{{produto.valorVenda | currency : 'R$ '}}</td>
       <td>
-        <button class="btn btn-primary col-4" (click)="openModal(produto)">Detalhes</button>
-        <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary col-4 ml-1">Editar</a>
+        <button class="btn btn-primary" (click)="openModal(produto)">Detalhes</button>
+        <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary  ml-1">Editar</a>
+        <button class="btn btn-danger   ml-1" (click)="remover(produto.produtoId)">Remover</button>
       </td>
     </tr>
   </tbody>
