@@ -12,41 +12,45 @@ export class ListProdutoComponent implements OnInit {
 
   @ViewChild('detalheModal') detalheModal : TemplateRef<any>;
 
-  @Input() produtos = ProdutoModel;
-
   produto: ProdutoModel;
-  produtoTamanho: any;
+  tamanhoProduto: any;
+  produtos: any;
+  exibirMensagem: boolean = false;
+  searchText;
 
   constructor(private modalService: NgbModal,
     public serviceProduto: ServiceProdutoService) { }
 
   ngOnInit(): void {
+    this.obterProdutos();
   }
 
   openModal(produto){
     this.produto = produto
-    this.produtoTamanho = produto.produtoTamanho;
+    this.tamanhoProduto = produto.tamanhoProduto;
     this.modalService.open(this.detalheModal, { size: 'xl' });
-  }  
-  
+  }
+
   remover(produtoId: any) {
 
     this.serviceProduto.removerProduto(produtoId).subscribe(
       (res: any) => {
-        this.produto = new ProdutoModel;
         this.obterProdutos();
       },
       (error) => {
-        //this.salvando = false;
       }
     );
   }
 
-  //NÃO SEI SE FUNCIONA E SE É A MELHOR PRATICA, MAS ADICIONEI PARA TESTAR
   obterProdutos() {
     this.serviceProduto.obterProdutos().subscribe(
       (result: any) => {
-        this.produto = result;
+        this.produtos = result;
+
+        // // this.exibirMensagem = true;
+        // setTimeout(()=>{
+        //     this.exibirMensagem = false;
+        // }, 2000);
       },
       (error) => {
       }

@@ -6,6 +6,8 @@ import { NewProdutoComponent } from './pages/produto/new-produto/new-produto.com
 import { EditProdutoComponent } from './pages/produto/edit-produto/edit-produto.component';
 import { NewVendaComponent } from './pages/venda/new-venda/new-venda.component';
 import { EditVendaComponent } from './pages/venda/edit-venda/edit-venda.component';
+import { ListProdutoComponent } from './pages/produto/list-produto/list-produto.component';
+import { LogentradaComponent } from './pages/logentrada/logentrada.component';
 
 
 const routes: Routes = [
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'editProduto/:id', component: EditProdutoComponent },
   { path: 'addVenda', component: NewVendaComponent },
   { path: 'editVenda/:id', component: EditVendaComponent },
+  { path: 'listProdutos', component: ListProdutoComponent },
+  { path: 'logEntrada', component: LogentradaComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent },
 ];

@@ -1,48 +1,75 @@
 <div class="container">
   <div class="card mt-3">
     <div class="card-header">
-      <h4>Novo produto</h4>
+      <h4>Adicionar Produto</h4>
     </div>
     <div class="card-body">
       <form [formGroup]="formProduto">
         <div class="row">
-          <div class="form-group col-md-2">
-            <label>Código:</label>
-            <input type="text" class="form-control" formControlName="codigo">
-          </div>
           <div class="form-group col-md-5">
-            <label>Nome do Calçado:</label>
-            <input type="text" class="form-control" formControlName="descricao">
+            <label>Nome:</label>
+            <input type="text" class="form-control" formControlName="nome">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Cor:</label>
+            <input type="text" class="form-control" formControlName="cor">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Marca:</label>
+            <input type="text" class="form-control" formControlName="marca">
           </div>
         </div>
 
         <div class="row">
-          <div class="form-group col-md-2">
+          <div class="form-group col-md-3">
+            <label>Categoria:</label>
+            <select class="form-control" formControlName="generoProduto">
+              <option value="1">Masculino</option>
+              <option value="2">Feminino</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Tipo:</label>
+            <select class="form-control" formControlName="categoria">
+              <option value="1">Sandalia</option>
+              <option value="2">Salto Alto</option>
+              <option value="3">Chinelo</option>
+              <option value="4">Tênis Feminino</option>
+              <option value="5">Tênis Masculino</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3">
             <label>Preço custo:</label>
             <input type="text" class="form-control" formControlName="precoCusto">
           </div>
 
-          <div class="form-group col-md-2">
+          <div class="form-group col-md-3">
             <label>Valor da venda:</label>
             <input type="text" class="form-control" formControlName="valorVenda">
           </div>
 
-          <div class="form-group col-md-2">
-            <label>Tipo:</label>
-            <select class="form-control" formControlName="sexoProduto">
-              <option value="1">Masculino</option>
-              <option value="2">Feminino</option>
-              <option value="3">Infantil</option>
-            </select>
+          <div class="form-group col-md-3">
+            <label>Promoção:</label>
+            <div class="ml-4">
+              <input id="sim" type="radio" class="custom-control-input" value="true" name="promocao">
+              <label class="custom-control-label" for="sim">Sim</label>
+            </div>
+            <div class="ml-4">
+              <input id="nao" type="radio" class="custom-control-input" value="false" name="promocao">
+              <label class="custom-control-label" for="nao">Não</label>
+            </div>
           </div>
-
         </div>
 
         <div class="row">
           <div class="form-group col-md-8">
             <label>Observação:</label>
             <textarea class="form-control" style="resize: none; height: 150px;" maxlength="500"
-              formControlName="observacao"></textarea>
+              formControlName="descricao"></textarea>
           </div>
         </div>
 
@@ -51,20 +78,17 @@
             <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
           </div>
         </div> -->
- 
-        <div class="form-group col-md-12 border rounded" formArrayName="produtoTamanho"
+
+        <div class="form-group col-md-12 border rounded" formArrayName="tamanhoProduto"
           style="background-color: #f5f5f5; ">
           <div class="row">
-            <div style="border-style: ridge; 
+            <div style="border-style: ridge;
             border-radius: 10px 10px 10px 10px;" class="ml-2 mt-2 mb-2"
-            *ngFor="let tamanho of produtoTamanho().controls; let i=index" [formGroupName]="i">
+              *ngFor="let tamanho of tamanhoProduto().controls; let i=index" [formGroupName]="i">
               <div class="row col-12">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Tamanho {{i+1}}:</label>
-                    <!-- <select class="form-control" formControlName="tamanho">
-                      <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
-                    </select> -->
                     <input type="number" class="form-control" formControlName="tamanho">
                   </div>
 
@@ -74,8 +98,9 @@
                   </div>
 
                   <div class="form-groufa-pull-right">
-                    <label>Cor:</label>
-                    <input type="text" class="form-control" formControlName="cor">
+                    <label>Descrição:</label>
+                    <textarea class="form-control" style="resize: none; height: 150px;" maxlength="500"
+                    formControlName="descricao"></textarea>
                   </div>
                 </div>
               </div>
@@ -95,7 +120,9 @@
             class="btn btn-info">Adicionar tamanho</button>
         </div>
 
-
+        <div *ngIf="exibirMensagem" class="row alert alert-success mt-2" role="alert">
+          <strong>Produto cadastrado com sucesso!</strong>
+        </div>
 
         <div class="row">
           <div class="ml-3">
@@ -111,4 +138,7 @@
       </form>
     </div>
   </div>
+
+
+
 </div>

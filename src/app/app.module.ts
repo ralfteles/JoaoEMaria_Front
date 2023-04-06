@@ -16,6 +16,9 @@ import { ListVendaComponent } from './pages/venda/list-venda/list-venda.componen
 import { NewVendaComponent } from './pages/venda/new-venda/new-venda.component';
 import { EditVendaComponent } from './pages/venda/edit-venda/edit-venda.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { LogentradaComponent } from './pages/logentrada/logentrada.component';
+import { MenuComponent } from './pages/menu/menu.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +29,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     EditProdutoComponent,
     ListVendaComponent,
     NewVendaComponent,
-    EditVendaComponent
+    EditVendaComponent,
+    LogentradaComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +40,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    Ng2SearchPipeModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],

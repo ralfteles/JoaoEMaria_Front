@@ -1,5 +1,9 @@
 export class ProdutoModel {
   produtoId: string;
+  nome: string;
+  cor: string;
+  marca: string;
+  promocao: boolean;
   descricao: string;
   codigo: string;
   quantidade: number;
@@ -8,8 +12,11 @@ export class ProdutoModel {
   tamanho: number;
   tamanhoRoupa: string;
   observacao: string;
-  produtoTamanho: any;
+  tamanhoProduto: any;
   sexoProduto: any;
+  promocaoText: string;
+  categoria: number;
+  generoProduto: number;
 
 
   constructor() { }

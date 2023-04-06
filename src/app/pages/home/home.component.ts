@@ -23,21 +23,21 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.obterProdutos();
+    //this.obterProdutos();
     this.obterVendas();
   }
 
-  obterProdutos() {
-    this.serviceProduto.obterProdutos().subscribe(
-      (result: ProdutoModel[]) => {
-        this.produtos = result;
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
-  }
+  // obterProdutos() {
+  //   this.serviceProduto.obterProdutos().subscribe(
+  //     (result: ProdutoModel[]) => {
+  //       this.produtos = result;
+  //       this.loading = false;
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
 
   obterVendas() {
     this.serviceVenda.obterVendas().subscribe(

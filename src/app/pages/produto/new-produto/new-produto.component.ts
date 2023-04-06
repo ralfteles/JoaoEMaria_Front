@@ -14,6 +14,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 export class NewProdutoComponent implements OnInit {
   formProduto: FormGroup;
   salvando: boolean = false;
+  exibirMensagem: boolean = false;
   tamanhoDeRoupas: any = [];
   fileToUpload: any;
   nomeImagem: string;
@@ -41,14 +42,17 @@ export class NewProdutoComponent implements OnInit {
 
   novoProdutoForm() {
     this.formProduto = this.formBuilder.group({
-      codigo: [''],
-      descricao: [''],
-      observacao: [''],
+      nome: [''],
+      cor: [''],
+      marca: [''],
+      categoria: ['1'],
+      generoProduto: ['1'],
       precoCusto: ['', Validators.required],
       valorVenda: ['', Validators.required],
+      promocao: ['false'],
       imagem: [''],
-      sexoProduto:['1'],
-      produtoTamanho: this.formBuilder.array([]),
+      descricao:[''],
+      tamanhoProduto: this.formBuilder.array([]),
     });
   }
 
@@ -61,8 +65,13 @@ export class NewProdutoComponent implements OnInit {
       (res: any) => {
         this.salvando = false;
         this.formProduto.reset();
-        this.msgSucess(res.data.message);
+        // this.msgSucess(res.data.message);
         this.removerTodosTamanhos();
+
+        this.exibirMensagem = true;
+        setTimeout(()=>{
+            this.exibirMensagem = false;
+        }, 2000);
       },
       (error) => {
         this.salvando = false;
@@ -97,29 +106,28 @@ export class NewProdutoComponent implements OnInit {
 
   //Loop dos pares
   adicionarTamanho() {
-    this.produtoTamanho().push(this.newQuantity());
+    this.tamanhoProduto().push(this.newQuantity());
   }
 
   removerTamanho(i: number) {
-    this.produtoTamanho().removeAt(i);
+    this.tamanhoProduto().removeAt(i);
   }
 
-  produtoTamanho(): FormArray {
-    return this.formProduto.get('produtoTamanho') as FormArray;
+  tamanhoProduto(): FormArray {
+    return this.formProduto.get('tamanhoProduto') as FormArray;
   }
 
   newQuantity(): FormGroup {
     return this.formBuilder.group({
       tamanho: '',
       descricao: '',
-      quantidade: 0,
-      cor: ''
+      quantidade: 0
     });
   }
 
   removerTodosTamanhos() {
-    while (this.produtoTamanho().length !== 0) {
-      this.produtoTamanho().removeAt(0);
+    while (this.tamanhoProduto().length !== 0) {
+      this.tamanhoProduto().removeAt(0);
     }
   }
 }

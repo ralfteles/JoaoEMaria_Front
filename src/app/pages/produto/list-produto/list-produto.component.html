@@ -1,8 +1,9 @@
-<div class="row mb-4">
-  <h3 class="col text-center">Produtos</h3>
-</div>
+<app-menu></app-menu>
 
-<div class="row ml-0 mb-3">
+<div class="row mt-3">
+  <h3 class="col text-center">Controle de Produtos</h3>
+</div>
+<div class="row ml-0 mt-5">
   <div class="input-group">
     <a routerLink="/addProduto" class="btn btn-primary btn-icon-split">
       <span class="icon text-white-50">
@@ -13,8 +14,12 @@
   </div>
 </div>
 
+<div class="float-right mt-3 mb-2">
+  <input class="form-control" type="text"
+  name="search" [(ngModel)]="searchText" placeholder="Filtrar">
+</div>
 
-<table class="table table-hover">
+<table class="table table-hover mt-4">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -24,7 +29,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody *ngFor="let produto of produtos">
+  <tbody *ngFor="let produto of produtos | filter:searchText">
     <tr>
       <th>#</th>
       <td>
@@ -33,22 +38,25 @@
         <img src="{{produto.imagem}}" class="rounded-circle" height="40" width="40" asp-append-version="true" />
 
       </td>
-      <td>{{produto.descricao}}</td>
+      <td>{{produto.nome}}</td>
       <td>{{produto.valorVenda | currency : 'R$ '}}</td>
       <td>
-        <button class="btn btn-primary" (click)="openModal(produto)">Detalhes</button>
-        <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary  ml-1">Editar</a>
-        <button class="btn btn-danger   ml-1" (click)="remover(produto.produtoId)">Remover</button>
+        <button class="btn btn-primary mb-1" (click)="openModal(produto)">Detalhes</button>
+        <a [routerLink]="['/editProduto', produto.produtoId]" class="btn btn-primary  ml-1 mb-1">Editar</a>
+        <!-- <button class="btn btn-danger   ml-1" (click)="remover(produto.produtoId)">Remover</button> -->
       </td>
     </tr>
   </tbody>
 </table>
 
+<div *ngIf="exibirMensagem" class="row alert alert-success mt-2" role="alert">
+  <strong>Produto removido com sucesso!</strong>
+</div>
 
 
 <ng-template #detalheModal let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Informações do produto {{produto.descricao}}</h4>
+    <h4 class="modal-title" id="modal-basic-title"> {{produto.nome}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -56,10 +64,22 @@
   <div class="modal-body">
     <div class="row mb-2">
       <div class="form-group col-md-4 d-flex flex-column">
-        <label><strong>Calçado:</strong></label>
-        <span>{{produto.descricao}}</span>
+        <label><strong>Nome:</strong></label>
+        <span>{{produto.nome}}</span>
       </div>
 
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Cor:</strong></label>
+        <span>{{produto.cor}}</span>
+      </div>
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Marca:</strong></label>
+        <span>{{produto.marca}}</span>
+      </div>
+    </div>
+
+    <div class="row mb-2">
       <div class="form-group col-md-4 d-flex flex-column">
         <label><strong>Preço custo:</strong></label>
         <span>{{produto.precoCusto | currency : 'R$'}}</span>
@@ -69,6 +89,11 @@
         <label><strong>Valor da venda:</strong></label>
         <span>{{produto.valorVenda | currency : 'R$'}}</span>
       </div>
+
+      <div class="form-group col-md-4 d-flex flex-column">
+        <label><strong>Promoção:</strong></label>
+        <span>{{produto.promocaoText}}</span>
+      </div>
     </div>
 
     <h5>Estoque</h5>
@@ -77,12 +102,12 @@
         <tr>
           <th></th>
           <th>Tamanho</th>
-          <th scope="col">Quantidade</th>
+          <th scope="col">Quantidade em estoque</th>
           <th scope="col">Detalhe</th>
           <th></th>
         </tr>
       </thead>
-      <tbody *ngFor="let tamanho of produtoTamanho">
+      <tbody *ngFor="let tamanho of tamanhoProduto">
         <tr>
           <td>#</td>
           <td> {{tamanho.tamanhoTexto}}</td>
