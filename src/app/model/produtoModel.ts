@@ -17,6 +17,8 @@ export class ProdutoModel {
   promocaoText: string;
   categoria: number;
   generoProduto: number;
+  imagem: string;
+  imagemBit: string;
 
 
   constructor() { }

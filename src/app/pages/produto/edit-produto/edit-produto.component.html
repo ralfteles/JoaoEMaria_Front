@@ -6,6 +6,17 @@
 
     <div class="card-body">
       <form [formGroup]="formProduto" *ngIf="formProduto">
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Foto:</label>
+            <input id="file-input"  #Image type="file"
+             (change)="handleFileInput($event.target.files)" />
+          </div>
+
+        </div>
+        <img *ngIf="imagemAdicionada != null " [src]='imagemAdicionada' class="rounded-circle" height="100" width="100"/>
+
         <div class="row">
           <div class="form-group col-md-5">
             <label>Nome:</label>
@@ -74,12 +85,6 @@
           </div>
         </div>
 
-        <!-- <div class="row"> COMENTADO ATÉ RESOLVER A QUESTÃO DA IMAGEM
-          <div class="form-group col-md-4">
-            <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
-          </div>
-        </div> -->
-
         <div class="form-group col-md-12 border rounded" formArrayName="tamanhoProduto"
           style="background-color: #f5f5f5; ">
           <div class="row">
@@ -90,10 +95,6 @@
                 <div class="col-md-12 mt-2">
                   <div class="form-group">
                     <label>Tamanho <b>{{i+1}}</b>:</label>
-                    <!-- <select class="form-control" formControlName="tamanho">
-                      <option *ngFor="let roupa of tamanhoDeRoupas" [value]="roupa.id">{{roupa.tamanho}}</option>
-                    </select> -->
-
                     <input type="number" class="form-control" formControlName="tamanho">
                   </div>
 
@@ -130,7 +131,9 @@
         </div>
         <div class="row">
           <div class="ml-3">
-            <button *ngIf="!salvando" (click)="atualizar()" [disabled]="!formProduto.valid"
+
+            <!-- <button *ngIf="!salvando" (click)="atualizar()" [disabled]="!formProduto.valid" -->
+              <button *ngIf="!salvando"  (click)="uploadFileAndAdd()" [disabled]="!formProduto.valid"
               class="btn btn-primary btn-icon-split">
               <span class="text">Atualizar</span>
             </button>

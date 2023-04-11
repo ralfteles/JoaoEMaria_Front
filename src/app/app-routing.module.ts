@@ -19,7 +19,9 @@ const routes: Routes = [
   { path: 'editVenda/:id', component: EditVendaComponent },
   { path: 'listProdutos', component: ListProdutoComponent },
   { path: 'logEntrada', component: LogentradaComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+
+  { path: '', redirectTo: '/listProdutos', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent },
 ];
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoModel } from 'src/app/model/produtoModel';
 import { ServiceProdutoService } from 'src/app/service/service-produto.service';
@@ -18,12 +19,16 @@ export class EditProdutoComponent implements OnInit {
   exibirMensagem: boolean = false;
   tamanhoDeRoupas: any = [];
   qtdProdutoTamanho: any;
+  fileToUpload: any;
+  imagemAdicionada: any;
+  nomeImagem: string;
 
   constructor(
     public formBuilder: FormBuilder,
     public serviceProduto: ServiceProdutoService,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +48,10 @@ export class EditProdutoComponent implements OnInit {
   }
 
   editProdutoForm() {
+
+    let objectURL = 'data:image/png;base64,' + this.produto.imagemBit;
+    this.imagemAdicionada = this.sanitizer.bypassSecurityTrustUrl(objectURL),
+
     this.formProduto = this.formBuilder.group({
       produtoId: [this.produto.produtoId],
       nome: [this.produto.nome, Validators.required],
@@ -52,10 +61,9 @@ export class EditProdutoComponent implements OnInit {
       generoProduto: [this.produto.generoProduto],
       precoCusto: [this.produto.precoCusto, Validators.required],
       valorVenda: [this.produto.valorVenda, Validators.required],
-      // promocao: [this.produto.promocao],
-          promocao: [this.produto.promocao].toLocaleString(),
+      promocao: [this.produto.promocao].toLocaleString(),
       descricao:[this.produto.descricao],
-      // imagem: [this.produto.imagem],
+      imagem: [this.produto.imagem],
       tamanhoProduto: this.formBuilder.array([])
     });
   }
@@ -70,16 +78,19 @@ export class EditProdutoComponent implements OnInit {
         })
       );
     }
-
     this.qtdProdutoTamanho = this.produto.tamanhoProduto.length;
   }
 
   atualizar() {
     this.salvando = true;
+
+    if (this.fileToUpload != undefined) {
+      this.formProduto.controls['imagem'].setValue(this.nomeImagem);
+    }
+
     this.serviceProduto.atualizarProduto(this.formProduto.value).subscribe(
       (res: any) => {
         this.salvando = false;
-        // this.msgSucess(res.data.message);
         this.exibirMensagem = true;
         setTimeout(()=>{
             this.exibirMensagem = false;
@@ -115,5 +126,29 @@ export class EditProdutoComponent implements OnInit {
       quantidade: '',
       cor:''
     });
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+    this.imagemAdicionada = null
+  }
+
+  uploadFileAndAdd() {
+    if (this.fileToUpload != undefined) {
+      this.salvando = true;
+      const formData: FormData = new FormData();
+      formData.append('Image', this.fileToUpload, this.fileToUpload.name);
+
+      this.serviceProduto.uploadFoto(formData).subscribe((res: any) => {
+        this.nomeImagem = res.data;
+        this.atualizar();
+      }),
+        (error) => {
+          this.salvando = false;
+          console.log('Erro ao fazer upload da imagem');
+        };
+    } else {
+      this.atualizar();
+    }
   }
 }

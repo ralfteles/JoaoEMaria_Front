@@ -5,6 +5,14 @@
     </div>
     <div class="card-body">
       <form [formGroup]="formProduto">
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Foto:</label>
+            <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
+          </div>
+        </div>
+
         <div class="row">
           <div class="form-group col-md-5">
             <label>Nome:</label>
@@ -41,10 +49,14 @@
           </div>
         </div>
 
+        <input currencyMask formControlName="precoCusto" />
         <div class="row">
           <div class="form-group col-md-3">
             <label>Preço custo:</label>
-            <input type="text" class="form-control" formControlName="precoCusto">
+            <!-- <input type="text" class="form-control" formControlName="precoCusto"> -->
+
+            <input currencyMask type="text"
+             class="form-control" formControlName="precoCusto">
           </div>
 
           <div class="form-group col-md-3">
@@ -72,12 +84,6 @@
               formControlName="descricao"></textarea>
           </div>
         </div>
-
-        <!-- <div class="row"> COMENTADO ATÉ RESOLVER A QUESTÃO DA IMAGEM
-          <div class="form-group col-md-4">
-            <input id="file-input" #Image type="file" (change)="handleFileInput($event.target.files)" />
-          </div>
-        </div> -->
 
         <div class="form-group col-md-12 border rounded" formArrayName="tamanhoProduto"
           style="background-color: #f5f5f5; ">
@@ -126,7 +132,9 @@
 
         <div class="row">
           <div class="ml-3">
-            <button *ngIf="!salvando" (click)="adicionar()" [disabled]="!formProduto.valid"
+
+            <!-- <button *ngIf="!salvando" (click)="adicionar()" [disabled]="!formProduto.valid" -->
+              <button *ngIf="!salvando" (click)="uploadFileAndAdd()" [disabled]="!formProduto.valid"
               class="btn btn-primary btn-icon-split">
               <span class="text">Cadastrar</span>
             </button>

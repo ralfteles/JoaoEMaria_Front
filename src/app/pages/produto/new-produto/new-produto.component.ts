@@ -5,6 +5,7 @@ import { ProdutoModel } from 'src/app/model/produtoModel';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-produto',
@@ -19,11 +20,14 @@ export class NewProdutoComponent implements OnInit {
   fileToUpload: any;
   nomeImagem: string;
   qtdTamanho: any = 0;
+  formattedAmount;
+  amount;
 
   constructor(
     public formBuilder: FormBuilder,
     public serviceProduto: ServiceProdutoService,
-    public router: Router
+    public router: Router,
+    private currencyPipe : CurrencyPipe
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +55,7 @@ export class NewProdutoComponent implements OnInit {
       valorVenda: ['', Validators.required],
       promocao: ['false'],
       imagem: [''],
-      descricao:[''],
+      descricao: [''],
       tamanhoProduto: this.formBuilder.array([]),
     });
   }
@@ -69,8 +73,8 @@ export class NewProdutoComponent implements OnInit {
         this.removerTodosTamanhos();
 
         this.exibirMensagem = true;
-        setTimeout(()=>{
-            this.exibirMensagem = false;
+        setTimeout(() => {
+          this.exibirMensagem = false;
         }, 2000);
       },
       (error) => {
@@ -88,21 +92,23 @@ export class NewProdutoComponent implements OnInit {
   }
 
   uploadFileAndAdd() {
-    this.salvando = true;
+    if (this.fileToUpload != undefined) {
+      this.salvando = true;
+      const formData: FormData = new FormData();
+      formData.append('Image', this.fileToUpload, this.fileToUpload.name);
 
-    const formData: FormData = new FormData();
-    formData.append('Image', this.fileToUpload, this.fileToUpload.name);
-
-    this.serviceProduto.uploadFoto(formData).subscribe((res: any) => {
-      this.nomeImagem = res.data;
+      this.serviceProduto.uploadFoto(formData).subscribe((res: any) => {
+        this.nomeImagem = res.data;
+        this.adicionar();
+      }),
+        (error) => {
+          this.salvando = false;
+          console.log('Erro ao fazer upload da imagem');
+        };
+    } else {
       this.adicionar();
-    }),
-      (error) => {
-        this.salvando = false;
-        console.log('Erro ao fazer upload da imagem');
-      };
+    }
   }
-
 
   //Loop dos pares
   adicionarTamanho() {
@@ -121,7 +127,7 @@ export class NewProdutoComponent implements OnInit {
     return this.formBuilder.group({
       tamanho: '',
       descricao: '',
-      quantidade: 0
+      quantidade: 0,
     });
   }
 
@@ -130,4 +136,5 @@ export class NewProdutoComponent implements OnInit {
       this.tamanhoProduto().removeAt(0);
     }
   }
+
 }
