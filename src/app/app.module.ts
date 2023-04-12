@@ -19,7 +19,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { LogentradaComponent } from './pages/logentrada/logentrada.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { CurrencyMaskModule } from 'ngx-currency-mask';
+import { CurrencyPipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,11 +42,10 @@ import { CurrencyMaskModule } from 'ngx-currency-mask';
     HttpClientModule,
     NgbModule,
     Ng2SearchPipeModule,
-    CurrencyMaskModule,
     NgMultiSelectDropDownModule.forRoot()
 
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

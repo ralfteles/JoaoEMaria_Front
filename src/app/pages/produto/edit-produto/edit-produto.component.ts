@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -28,7 +29,8 @@ export class EditProdutoComponent implements OnInit {
     public serviceProduto: ServiceProdutoService,
     public router: Router,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {
@@ -149,6 +151,34 @@ export class EditProdutoComponent implements OnInit {
         };
     } else {
       this.atualizar();
+    }
+  }
+
+  transformPrecoCustoAmount() {
+    var preco = this.formProduto
+      .get('precoCusto')
+      .value.replace('R$', '')
+      .replace(',', '.');
+
+      if (/^[0-9]*\.?[0-9]*$/.test(preco)) {
+        var precoTransorm = this.currencyPipe.transform(preco, 'R$');
+        this.formProduto.controls['precoCusto'].setValue(precoTransorm.replace('R$',''));
+      } else {
+        this.formProduto.controls['precoCusto'].setValue(0);
+      }
+  }
+
+  transformValorVendaAmount() {
+    var preco = this.formProduto
+      .get('valorVenda')
+      .value.replace('R$', '')
+      .replace(',', '.');
+
+    if (/^[0-9]*\.?[0-9]*$/.test(preco)) {
+      var precoTransorm = this.currencyPipe.transform(preco, 'R$');
+      this.formProduto.controls['valorVenda'].setValue(precoTransorm.replace('R$',''));
+    } else {
+      this.formProduto.controls['valorVenda'].setValue(0);
     }
   }
 }

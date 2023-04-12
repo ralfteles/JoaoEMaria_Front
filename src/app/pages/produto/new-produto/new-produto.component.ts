@@ -4,8 +4,8 @@ import { ServiceProdutoService } from 'src/app/service/service-produto.service';
 import { ProdutoModel } from 'src/app/model/produtoModel';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { CurrencyPipe } from '@angular/common';
+import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-new-produto',
@@ -20,29 +20,19 @@ export class NewProdutoComponent implements OnInit {
   fileToUpload: any;
   nomeImagem: string;
   qtdTamanho: any = 0;
-  formattedAmount;
-  amount;
 
   constructor(
     public formBuilder: FormBuilder,
     public serviceProduto: ServiceProdutoService,
     public router: Router,
-    private currencyPipe : CurrencyPipe
+    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {
-    this.obterTamanhoDeRoupas();
     this.novoProdutoForm();
   }
 
-  obterTamanhoDeRoupas() {
-    this.serviceProduto.obterTamanhosDeRoupas().subscribe(
-      (result) => {
-        this.tamanhoDeRoupas = result;
-      },
-      (error) => {}
-    );
-  }
+
 
   novoProdutoForm() {
     this.formProduto = this.formBuilder.group({
@@ -137,4 +127,33 @@ export class NewProdutoComponent implements OnInit {
     }
   }
 
+  transformPrecoCustoAmount() {
+    var preco = this.formProduto
+      .get('precoCusto')
+      .value.replace('R$', '')
+      .replace(',', '.');
+
+      if (/^[0-9]*\.?[0-9]*$/.test(preco)) {
+        var precoTransorm = this.currencyPipe.transform(preco, 'R$');
+        this.formProduto.controls['precoCusto'].setValue(precoTransorm.replace('R$',''));
+      } else {
+        this.formProduto.controls['precoCusto'].setValue(0);
+      }
+  }
+
+  transformValorVendaAmount() {
+    var preco = this.formProduto
+      .get('valorVenda')
+      .value.replace('R$', '')
+      .replace(',', '.');
+
+    if (/^[0-9]*\.?[0-9]*$/.test(preco)) {
+      var precoTransorm = this.currencyPipe.transform(preco, 'R$');
+      this.formProduto.controls['valorVenda'].setValue(precoTransorm.replace('R$',''));
+    } else {
+      this.formProduto.controls['valorVenda'].setValue(0);
+    }
+  }
 }
+
+

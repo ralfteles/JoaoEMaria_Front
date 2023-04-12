@@ -49,19 +49,17 @@
           </div>
         </div>
 
-        <input currencyMask formControlName="precoCusto" />
         <div class="row">
           <div class="form-group col-md-3">
             <label>Preço custo:</label>
-            <!-- <input type="text" class="form-control" formControlName="precoCusto"> -->
-
-            <input currencyMask type="text"
-             class="form-control" formControlName="precoCusto">
+            <input type="text" class="form-control"
+            (blur)="transformPrecoCustoAmount() "formControlName="precoCusto"  />
           </div>
 
           <div class="form-group col-md-3">
             <label>Valor da venda:</label>
-            <input type="text" class="form-control" formControlName="valorVenda">
+            <input type="text" class="form-control"
+            (blur)="transformValorVendaAmount()" formControlName="valorVenda">
           </div>
 
           <div class="form-group col-md-3">
